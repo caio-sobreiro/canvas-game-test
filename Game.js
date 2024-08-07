@@ -1,6 +1,7 @@
 class Game {
     player = null
     terrain = []
+    bullets = []
 
     constructor() {}
 
@@ -15,11 +16,17 @@ class Game {
     update() {
         this.player.update()
         this.updatePlayerCollisionStatus()
+        const bullet = this.player.checkIfPlayerIsFiring()
+        if (bullet) {
+            this.bullets.push(bullet)
+        }
+        this.bullets.forEach(b => b.update())
     }
 
     draw(ctx) {
         this.player.draw(ctx)
         this.terrain.forEach(t => t.draw(ctx))
+        this.bullets.forEach(b => b.draw(ctx))
     }
 
     updatePlayerCollisionStatus() {
@@ -32,6 +39,11 @@ class Game {
         } else {
             this.player.grounded = false
         }
+    }
+
+    clearCanvas() {
+        ctx.fillStyle = 'lightblue'
+        ctx.fillRect(0, 0, c.width, c.height)
     }
 
 }

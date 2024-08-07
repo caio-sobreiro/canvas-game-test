@@ -6,25 +6,20 @@ const ctx = c.getContext('2d')
 c.width = 1000
 c.height = 1000
 
-// set canvas background color
-function clearCanvas() {
-    ctx.fillStyle = 'lightblue'
-    ctx.fillRect(0, 0, c.width, c.height)
-}
-
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 async function run () {
     const game = new Game()
-    const player = new Player(50, 50, 50, 100)
+    const player = new TopDownPlayer(50, 50, 50, 50)
 
     game.setPlayer(player)
 
-    game.addTerrain(new Terrain(0, 900, 1000, 100))
-    game.addTerrain(new Terrain(400, 750, 100, 100))
-    game.addTerrain(new Terrain(200, 600, 100, 100))
+    game.addTerrain(new Terrain(0, 950, 1000, 50))
+    game.addTerrain(new Terrain(0, 0, 50, 1000))
+    game.addTerrain(new Terrain(950, 0, 50, 1000))
+    game.addTerrain(new Terrain(0, 0, 1000, 50))
 
     // key listeners
     window.addEventListener('keyup',(event) => player.releaseInput(event),false)
@@ -32,7 +27,7 @@ async function run () {
 
     // game loop
     while (true) {
-        clearCanvas()
+        game.clearCanvas()
 
         // update
         game.update()
